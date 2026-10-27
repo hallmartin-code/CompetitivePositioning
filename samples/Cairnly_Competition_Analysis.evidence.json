@@ -1,0 +1,78 @@
+{
+  "grounding_note": "9 of 9 quoted claims were verified against the source text.",
+  "issues": [],
+  "claims": [
+    {
+      "claim": "Most interviewed practices default to the distributor rep's suggested order.",
+      "refs": [
+        "D3"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Most interviewed practices buy from multiple distributors, and none forecast usage from the schedule.",
+      "refs": [
+        "S1.2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Office managers spend about five hours a week on ordering and reconciliation.",
+      "refs": [
+        "D2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Ordering depends on a single person and spreadsheet.",
+      "refs": [
+        "S1.2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Distribution is concentrated in two national distributors with their own portals.",
+      "refs": [
+        "D5"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "DSO consolidation squeezes independent practices on supply prices.",
+      "refs": [
+        "D5"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Reported savings come from a small internal sample.",
+      "refs": [
+        "D7"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Cairnly has five paying customers at $249 per location per month.",
+      "refs": [
+        "D7"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Distributor reps likely have little incentive to optimize practice spend across competitors, which leaves room for a neutral ordering layer.",
+      "refs": [
+        "D3",
+        "D5",
+        "D6"
+      ],
+      "check": "inference"
+    },
+    {
+      "claim": "The CEO has direct dental group operations experience.",
+      "refs": [
+        "D9"
+      ],
+      "check": "verified"
+    }
+  ]
+}

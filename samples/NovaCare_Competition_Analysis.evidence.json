@@ -1,0 +1,71 @@
+{
+  "grounding_note": "5 of 5 quoted claims were verified against the source text.",
+  "issues": [],
+  "claims": [
+    {
+      "claim": "NovaCare AI describes its product only as an AI platform for healthcare.",
+      "refs": [
+        "D2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The deck positions the company broadly as the future of healthcare, without a segment.",
+      "refs": [
+        "D1"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The market opportunity is asserted but not quantified or defined.",
+      "refs": [
+        "D2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The team is described in general terms with no named domain experience.",
+      "refs": [
+        "D3"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The company is raising $2M.",
+      "refs": [
+        "D4"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The deck identifies no target customer, buyer or workflow.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "check": "inference"
+    },
+    {
+      "claim": "The deck names no competitors, incumbents or alternative approaches.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "check": "inference"
+    },
+    {
+      "claim": "The deck presents no traction such as users, pilots or revenue.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "check": "inference"
+    }
+  ]
+}

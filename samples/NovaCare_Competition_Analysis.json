@@ -1,0 +1,141 @@
+{
+  "company_name": "NovaCare AI",
+  "one_line": "NovaCare AI says it is building an AI platform for healthcare; the deck names no product, buyer or customer.",
+  "headline": "The deck is too thin to assess competition: no customer, problem, alternatives or wedge are described, so no positioning thesis can be formed yet.",
+  "status_quo": {
+    "body": "The deck does not describe how any customer handles a problem today. NovaCare AI states only that it is building an AI platform for healthcare. It does not say whether the user is a clinician, administrator, payer, patient or life sciences buyer, what work they do, or with what tools, staff or vendors. Without a named workflow we cannot say where time, money or risk is lost, and we will not guess on the founders' behalf.",
+    "refs": [
+      "D1",
+      "D2"
+    ]
+  },
+  "failure_modes": {
+    "body": "The deck gives no reason the current approach fails. There is no discussion of incentives, budget ownership, fragmentation, switching costs or distribution. The only market statement is the unquantified line \"Huge opportunity.\" That describes the size of the category, not a structural failure that a new entrant could exploit.",
+    "refs": [
+      "D2"
+    ]
+  },
+  "alternatives": [
+    {
+      "name": "Whatever the target customer does today (unspecified)",
+      "kind": "status quo",
+      "how_used": "Unknown; the deck does not identify the customer or the task being replaced.",
+      "where_it_breaks": "Not shown; the deck gives no pain point or cost of the current approach.",
+      "refs": [
+        "D2"
+      ]
+    },
+    {
+      "name": "Existing healthcare software vendors (category unspecified)",
+      "kind": "incumbent",
+      "how_used": "Likely already used by any healthcare buyer, though the deck names no category.",
+      "where_it_breaks": "Not shown; the deck does not say what incumbents fail to do.",
+      "refs": [
+        "D2"
+      ]
+    }
+  ],
+  "market_structure": {
+    "body": "The sources contain nothing about how the market is organized. They do not show who buys, who pays, how purchases are made, which segment is targeted or who competes. \"Healthcare\" covers many separate markets with different buyers and sales cycles. The deck does not choose one, so we cannot map competitors or judge whether the space is concentrated or fragmented.",
+    "refs": [
+      "D1",
+      "D2"
+    ]
+  },
+  "wedge": {
+    "body": "No wedge is identifiable from the deck. A wedge would need three things: a specific first customer, a task that customer cannot do well with current tools or vendors, and a reason winning that task leads to adjacent ones. The deck supplies none of them. The team slide describes the founders only as experienced and passionate, so it gives no domain-specific reason they would win a particular segment. NovaCare AI would need to show a named use case, early users or pilots, and evidence of why incumbents or in-house teams cannot serve that use case before a wedge can be assessed.",
+    "refs": [
+      "D2",
+      "D3",
+      "D4"
+    ]
+  },
+  "thesis_support": "not supported",
+  "thesis_support_rationale": "The four slides contain a vision line, an unquantified opportunity claim, a generic team description and a $2M ask. Nothing addresses customers, alternatives, market structure or differentiation.",
+  "evidence_gaps": [
+    "Target customer, buyer and budget owner within healthcare",
+    "Specific workflow or problem being solved and its current cost",
+    "Named competitors, incumbents or in-house alternatives and where they fall short",
+    "Any traction: pilots, users, revenue or letters of intent"
+  ],
+  "diligence_questions": [
+    "Who is your first paying customer, and what exactly do they do today without you?",
+    "Which tool, vendor or internal team do you replace, and why would they switch?",
+    "What do the founders know about this segment that incumbents and new entrants do not?"
+  ],
+  "claims": [
+    {
+      "statement": "NovaCare AI describes its product only as an AI platform for healthcare.",
+      "refs": [
+        "D2"
+      ],
+      "quote": "We are building an AI platform for healthcare.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The deck positions the company broadly as the future of healthcare, without a segment.",
+      "refs": [
+        "D1"
+      ],
+      "quote": "The future of healthcare",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The market opportunity is asserted but not quantified or defined.",
+      "refs": [
+        "D2"
+      ],
+      "quote": "Huge opportunity.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The team is described in general terms with no named domain experience.",
+      "refs": [
+        "D3"
+      ],
+      "quote": "Experienced founders with a passion for innovation.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The company is raising $2M.",
+      "refs": [
+        "D4"
+      ],
+      "quote": "Raising $2M.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The deck identifies no target customer, buyer or workflow.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "quote": "",
+      "basis": "inference from sources"
+    },
+    {
+      "statement": "The deck names no competitors, incumbents or alternative approaches.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "quote": "",
+      "basis": "inference from sources"
+    },
+    {
+      "statement": "The deck presents no traction such as users, pilots or revenue.",
+      "refs": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "quote": "",
+      "basis": "inference from sources"
+    }
+  ]
+}

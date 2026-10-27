@@ -1,0 +1,130 @@
+{
+  "template": "competition_analysis",
+  "version": "1.0",
+  "title": "Competition Analysis",
+  "purpose": "One-page competition section of a seed-stage investment memo. Explains how customers solve the problem today, why those approaches fail, how the market is organized, and where an investment-relevant wedge emerges. States plainly when the source materials do not support a thesis.",
+  "voice": "A venture partner explaining a market to another investor. Customer workflow, market structure and investor insight come before product description. Plain, specific, declarative sentences; no hype words.",
+
+  "format": {
+    "page_size": "US Letter, portrait",
+    "page_limit": 1,
+    "margins_in": {"left": 0.55, "right": 0.55, "top": 0.45, "bottom": 0.6},
+    "font_family": "Open Sans (Helvetica fallback)",
+    "fit_rule": "Render at the largest type scale between 1.16 and 0.76 that fits one page; shrink to fit as a last resort and warn the user.",
+    "palette": {
+      "ink": "#000000", "body": "#4B4F58", "muted": "#7A7A7A",
+      "coral": "#ED5644", "teal": "#4FC4D6", "amber": "#F1A31F",
+      "cream": "#FFFDF6", "gray_bg": "#F7F7F7", "rule": "#CBD6E2"
+    },
+    "source_line": {
+      "prefix": "Source: ",
+      "empty_text": "none in the materials; analyst view.",
+      "style": "Open Sans Italic, 6.6pt, muted",
+      "pattern": "<Document short name> s.<slides> | p.<pages>; <next document> ..."
+    },
+    "ref_convention": "D<n> = primary deck slide/page n; S<k>.<n> = supporting document k, page n."
+  },
+
+  "layout": [
+    {
+      "block": "header",
+      "fields": [
+        {"key": "eyebrow", "type": "static", "text": "COMPETITION ANALYSIS  ·  SEED-STAGE MEMO", "style": "SemiBold 7.2pt, coral"},
+        {"key": "company_name", "type": "text", "label": "Company name", "source": "user-confirmed", "style": "Bold 17pt, ink"},
+        {"key": "one_line", "type": "text", "label": "One-line description", "max_words": 22, "style": "Regular 8.6pt, muted",
+         "instruction": "What the company sells and to whom, in one plain sentence."},
+        {"key": "compiled_date", "type": "date", "label": "Compiled", "position": "top right", "style": "Regular 7pt, muted"}
+      ]
+    },
+    {
+      "block": "headline",
+      "decoration": "40pt coral bar above",
+      "fields": [
+        {"key": "headline", "type": "text", "label": "Headline (investor takeaway)", "max_words": 24, "style": "Bold 11pt, ink",
+         "instruction": "The investor takeaway in one sentence. If the evidence is thin, the headline says so."}
+      ]
+    },
+    {
+      "block": "evidence_callout",
+      "label": "Evidence for the thesis",
+      "style": "Cream panel with a 3pt left border colored by rating",
+      "fields": [
+        {"key": "thesis_support", "type": "enum", "label": "Evidence for the thesis",
+         "options": ["supported", "partially supported", "not supported"],
+         "border_color": {"supported": "teal", "partially supported": "amber", "not supported": "coral"},
+         "instruction": "How well the sources support an investment thesis on competition and positioning."},
+        {"key": "thesis_support_rationale", "type": "text", "label": "Why", "max_words": 40,
+         "instruction": "One or two sentences on why the thesis support is rated this way."}
+      ]
+    },
+    {
+      "block": "section", "key": "status_quo", "title": "How customers solve it today",
+      "type": "prose_with_sources", "min_words": 55, "max_words": 85,
+      "instruction": "How customers solve the problem today: the actual workflow, who does it, what tools, people and vendors are involved, and where time, money or risk leaks out."
+    },
+    {
+      "block": "section", "key": "failure_modes", "title": "Why those approaches fail",
+      "type": "prose_with_sources", "min_words": 55, "max_words": 85,
+      "instruction": "Why those approaches fail, structurally (incentives, fragmentation, budget ownership, switching costs, distribution), not just 'they are inefficient'."
+    },
+    {
+      "block": "table", "key": "alternatives", "title": "The alternatives a customer weighs",
+      "rows": {"min": 2, "max": 4},
+      "instruction": "Ways customers solve this today, including the status quo. Name a specific company only if the sources name it; otherwise describe it by category.",
+      "columns": [
+        {"key": "name", "header": "Alternative", "type": "text", "instruction": "The alternative as a customer would name it."},
+        {"key": "kind", "header": null, "type": "enum", "display": "muted subtitle under name",
+         "options": ["status quo", "incumbent", "direct competitor", "adjacent tool", "in-house build"]},
+        {"key": "how_used", "header": "Who uses it, and how", "type": "text", "max_words": 18,
+         "instruction": "Who relies on it and how."},
+        {"key": "where_it_breaks", "header": "Where it breaks", "type": "text", "max_words": 18,
+         "instruction": "The specific point where it fails the customer."},
+        {"key": "refs", "header": "Source", "type": "refs", "empty_text": "analyst view"}
+      ]
+    },
+    {
+      "block": "section", "key": "market_structure", "title": "Market structure",
+      "type": "prose_with_sources", "min_words": 50, "max_words": 80,
+      "instruction": "How the market is organized: who holds budget, how buying happens, and why incumbents have not fixed the problem."
+    },
+    {
+      "block": "section", "key": "wedge", "title": "Where the wedge emerges",
+      "type": "prose_with_sources", "min_words": 55, "max_words": 85,
+      "instruction": "Where an investment-relevant wedge emerges and what has to be true for it to widen. If the sources do not support a wedge, say what is missing instead."
+    },
+    {
+      "block": "two_column_lists",
+      "columns": [
+        {"key": "evidence_gaps", "title": "What the materials do not show", "type": "bullets",
+         "items": {"min": 2, "max": 4}, "max_words_per_item": 16, "empty_text": "None noted.",
+         "instruction": "Specific things the sources do not show that the thesis needs."},
+        {"key": "diligence_questions", "title": "Questions for the founder", "type": "bullets",
+         "items": {"min": 2, "max": 3}, "max_words_per_item": 20, "empty_text": "None noted.",
+         "instruction": "Questions for the founder that would most change the view."}
+      ]
+    },
+    {
+      "block": "fine_print",
+      "style": "Regular 5.4pt, muted",
+      "parts": ["Based solely on the uploaded materials.", "{grounding_note}",
+                "Source references point to the slide or page the point is drawn from.", "{disclaimer}"]
+    },
+    {
+      "block": "footer",
+      "pattern": "[Company Name] Competition Analysis   [PAGE#]   Compiled on [DATE] by TEN Capital Network   [TEN Capital Logo]",
+      "style": "Open Sans 7pt, centered; logo TEN_Capital_logo_footer.png at 0.67in x 0.25in"
+    }
+  ],
+
+  "evidence_record": {
+    "shown_in": "Evidence tab and <name>.evidence.json; not printed in the PDF",
+    "claims": {"min": 6, "max": 14},
+    "fields": [
+      {"key": "statement", "type": "text", "instruction": "One factual claim the analysis relies on."},
+      {"key": "refs", "type": "refs", "instruction": "Page refs where the claim is found."},
+      {"key": "quote", "type": "text", "max_words": 25,
+       "instruction": "Verbatim excerpt copied exactly from the cited page. Empty string for inferences."},
+      {"key": "basis", "type": "enum", "options": ["stated in sources", "inference from sources"]}
+    ]
+  }
+}
