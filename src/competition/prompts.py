@@ -54,3 +54,24 @@ def build_user_message(bundle: SourceBundle, company_name: str, report: Evidence
         "Return it in the required JSON structure."
     )
     return "\n".join(parts)
+
+
+TIGHTEN_SYSTEM_PROMPT = """\
+You are the editor of a one-page seed-stage investment memo. Some passages run over their hard word limits and the page will not fit. Rewrite each passage you are given so it is at or under its limit; aim for about 90% of the limit so the count is safely inside it.
+
+- Keep what matters to an investor: the specific facts and figures, named alternatives, who does what, and the passage's conclusion.
+- Keep wording that marks inference ("suggests", "likely", "by the company's estimate") and any statement that evidence is missing. Do not turn a hedged claim into a firm one.
+- Cut repetition, throat-clearing, secondary examples and restated context.
+- Do not add information, and do not change the meaning.
+- Same voice: plain, declarative sentences. No bullets or markdown.
+"""
+
+
+def build_tighten_message(passages: list[tuple[str, object, str]]) -> str:
+    """passages: (id, Overrun, current text)."""
+    parts = ["Rewrite each passage to fit its limit. Return every passage id."]
+    for pid, overrun, text in passages:
+        parts.append(f'<passage id="{pid}" section={quoteattr(overrun.label)} '
+                     f'limit_words="{overrun.limit}" current_words="{overrun.words}">\n'
+                     f"{escape(text)}\n</passage>")
+    return "\n\n".join(parts)

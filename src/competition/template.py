@@ -9,6 +9,7 @@ all read from it, so changing a title or a word limit is a one-file edit.
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -77,28 +78,72 @@ def describe(key: str) -> str:
     return text.strip()
 
 
-def length_issues(analysis) -> list[str]:
-    """Fields that exceed the template's word limits. Shown to the editor, never auto-trimmed."""
-    issues: list[str] = []
+FieldPath = tuple  # location of a text field, e.g. ("wedge", "body"), ("alternatives", 0, "how_used")
 
-    def check(label: str, text: str, limit: int | None) -> None:
-        n = len(text.split())
+
+@dataclass
+class Overrun:
+    path: FieldPath
+    label: str
+    words: int
+    limit: int
+
+    def message(self) -> str:
+        return f"{self.label}: {self.words} words (limit {self.limit})."
+
+
+def word_count(text: str) -> int:
+    return len(text.split())
+
+
+def get_text(analysis, path: FieldPath) -> str:
+    obj = analysis
+    for step in path:
+        obj = obj[step] if isinstance(step, int) else getattr(obj, step)
+    return obj
+
+
+def set_text(analysis, path: FieldPath, value: str) -> None:
+    *head, last = path
+    obj = analysis
+    for step in head:
+        obj = obj[step] if isinstance(step, int) else getattr(obj, step)
+    if isinstance(last, int):
+        obj[last] = value
+    else:
+        setattr(obj, last, value)
+
+
+def length_overruns(analysis) -> list[Overrun]:
+    """Every text field longer than its template word limit, in print order."""
+    found: list[Overrun] = []
+
+    def check(path: FieldPath, label: str, limit: int | None) -> None:
+        n = word_count(get_text(analysis, path))
         if limit and n > limit:
-            issues.append(f"{label}: {n} words (limit {limit}).")
+            found.append(Overrun(path, label, n, limit))
 
     for key in ("one_line", "headline", "thesis_support_rationale"):
-        check(field(key)["label"], getattr(analysis, key), field(key).get("max_words"))
+        check((key,), field(key)["label"], field(key).get("max_words"))
     for sec in sections():
-        check(sec["title"], getattr(analysis, sec["key"]).body, sec.get("max_words"))
+        check((sec["key"], "body"), sec["title"], sec.get("max_words"))
     for col in ("how_used", "where_it_breaks"):
-        for alt in analysis.alternatives:
-            check(f"{alt.name} / {field(col)['header']}", getattr(alt, col), field(col).get("max_words"))
+        for i, alt in enumerate(analysis.alternatives):
+            check(("alternatives", i, col), f"{alt.name} / {field(col)['header']}", field(col).get("max_words"))
+    for key in ("evidence_gaps", "diligence_questions"):
+        f = field(key)
+        for i in range(len(getattr(analysis, key))):
+            check((key, i), f"{f['title']} #{i + 1}", f.get("max_words_per_item"))
+    return found
+
+
+def length_issues(analysis) -> list[str]:
+    """Human-readable overruns of word and item limits, shown to the editor."""
+    issues = [o.message() for o in length_overruns(analysis)]
     for key in ("evidence_gaps", "diligence_questions"):
         f = field(key)
         if len(getattr(analysis, key)) > f["items"]["max"]:
             issues.append(f"{f['title']}: {len(getattr(analysis, key))} items (limit {f['items']['max']}).")
-        for item in getattr(analysis, key):
-            check(f["title"], item, f.get("max_words_per_item"))
     return issues
 
 

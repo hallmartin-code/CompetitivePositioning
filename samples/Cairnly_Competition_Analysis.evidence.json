@@ -1,30 +1,44 @@
 {
-  "grounding_note": "9 of 9 quoted claims were verified against the source text.",
+  "grounding_note": "11 of 11 quoted claims were verified against the source text.",
   "issues": [],
   "claims": [
     {
-      "claim": "Most interviewed practices default to the distributor rep's suggested order.",
-      "refs": [
-        "D3"
-      ],
-      "check": "verified"
-    },
-    {
-      "claim": "Most interviewed practices buy from multiple distributors, and none forecast usage from the schedule.",
-      "refs": [
-        "S1.2"
-      ],
-      "check": "verified"
-    },
-    {
-      "claim": "Office managers spend about five hours a week on ordering and reconciliation.",
+      "claim": "Office managers spend about 5 hours a week on ordering and invoice reconciliation.",
       "refs": [
         "D2"
       ],
       "check": "verified"
     },
     {
-      "claim": "Ordering depends on a single person and spreadsheet.",
+      "claim": "Interviewed practices reported 3 critical-item stockouts per quarter.",
+      "refs": [
+        "D2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The rep's suggested order is the default because nobody checks it.",
+      "refs": [
+        "D3"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Office managers accept rep orders without comparing prices.",
+      "refs": [
+        "S1.1"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "Most interviewed practices buy from multiple distributors.",
+      "refs": [
+        "S1.2"
+      ],
+      "check": "verified"
+    },
+    {
+      "claim": "The spreadsheet process depends on a single person.",
       "refs": [
         "S1.2"
       ],
@@ -38,41 +52,40 @@
       "check": "verified"
     },
     {
-      "claim": "DSO consolidation squeezes independent practices on supply prices.",
+      "claim": "DSO consolidation squeezes independent practices on price.",
       "refs": [
         "D5"
       ],
       "check": "verified"
     },
     {
-      "claim": "Reported savings come from a small internal sample.",
+      "claim": "Cairnly has 5 paying customers at $249 per location per month.",
       "refs": [
         "D7"
       ],
       "check": "verified"
     },
     {
-      "claim": "Cairnly has five paying customers at $249 per location per month.",
+      "claim": "The 11% savings figure comes from internal data on five practices.",
       "refs": [
         "D7"
       ],
       "check": "verified"
     },
     {
-      "claim": "Distributor reps likely have little incentive to optimize practice spend across competitors, which leaves room for a neutral ordering layer.",
-      "refs": [
-        "D3",
-        "D5",
-        "D6"
-      ],
-      "check": "inference"
-    },
-    {
-      "claim": "The CEO has direct dental group operations experience.",
+      "claim": "The CEO has dental group operations experience relevant to purchasing.",
       "refs": [
         "D9"
       ],
       "check": "verified"
+    },
+    {
+      "claim": "Distributors that run their own portals may resist a third party routing orders across catalogs, which would threaten the wedge.",
+      "refs": [
+        "D5",
+        "D6"
+      ],
+      "check": "inference"
     }
   ]
 }

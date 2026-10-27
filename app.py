@@ -57,7 +57,7 @@ import streamlit as st
 sys.path.insert(0, str(ROOT / "src"))
 
 from competition import config  # noqa: E402
-from competition.analyzer import AnalysisError, generate, make_client  # noqa: E402
+from competition.analyzer import AnalysisError, generate, make_client, tighten  # noqa: E402
 from competition.evidence import EvidenceReport, scan  # noqa: E402
 from competition.ingest import IngestError, SourceBundle, guess_company_name, load_bundle  # noqa: E402
 from competition.notify import send_result_email  # noqa: E402
@@ -252,6 +252,7 @@ if clicked:
         ss.result = result
         ss.draft = result.analysis.model_copy(deep=True)
         ss.draft_version += 1
+        ss.tighten_note = None
         note = result.grounding.note()
         rendered = render_pdf(ss.draft, bundle.format_refs, grounding_note=note)
         ss.pdf_cache = (_pdf_key(ss.draft, note), rendered)
@@ -270,6 +271,10 @@ if ss.draft is None:
 
 result = ss.result
 draft: Analysis = ss.draft
+auto = getattr(result, "tighten", None)
+if auto is not None and (auto.shortened or auto.error):
+    st.caption(f"{auto.shortened} passage(s) the model wrote over the template's word limits were shortened "
+               "automatically." + (f" Shortening stopped early: {auto.error}" if auto.error else ""))
 if ss.email_status is not None:
     e = ss.email_status
     if e.sent:
@@ -351,8 +356,25 @@ with tab_draft:
     if over:
         st.warning("Over the template's length limits (the PDF will use smaller type):\n\n"
                    + "\n".join(f"- {i}" for i in over))
+        if st.button("Shorten to fit", type="primary", disabled=not _api_key(),
+                     help="Rewrites only the over-limit passages to their word limits, keeping their facts. "
+                          "Runs a short model call; nothing else in the draft changes."):
+            with st.spinner("Shortening the over-limit passages…"):
+                ss.tighten_note = tighten(draft, make_client(_api_key()))
+            ss.draft_version += 1  # reload the edit widgets from the shortened draft
+            st.rerun()
+    note = ss.get("tighten_note")
+    if note is not None:
+        if note.error:
+            st.error(f"Could not shorten the draft: {note.error}")
+        elif note.remaining:
+            st.info(f"Shortened {note.shortened} passage(s); {len(note.remaining)} still over. "
+                    "Trim those by hand or try again.")
+        elif note.shortened:
+            st.success(f"Shortened {note.shortened} passage(s); the draft now fits the template.")
     if st.button("Discard edits and restore the model's draft"):
         ss.draft = result.analysis.model_copy(deep=True)
+        ss.tighten_note = None
         ss.draft_version += 1
         st.rerun()
 

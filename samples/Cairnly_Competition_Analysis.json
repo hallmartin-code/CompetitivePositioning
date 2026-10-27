@@ -1,56 +1,52 @@
 {
   "company_name": "Cairnly",
   "one_line": "Cairnly sells supply forecasting and multi-distributor ordering software to independent US dental practices, priced per location per month.",
-  "headline": "Cairnly targets a real gap where independent practices default to distributor reps, but five paying customers and n=5 savings data leave the wedge unproven.",
+  "headline": "Cairnly targets a real cross-distributor ordering gap at independent dental practices, but traction is five paying customers and savings data is internal, n=5.",
   "status_quo": {
-    "body": "In an independent practice, the office manager runs supply ordering on top of the front desk job. They walk the closet, update a spreadsheet, and usually accept the monthly re-order the distributor rep suggests. Gaps get filled from Amazon Business or a second distributor at retail prices, and invoices are matched to deliveries by hand at month end. Cairnly reports this takes about 5 hours a week. In its 22 interviews, no practice tracked usage per procedure, and 17 bought from two or more distributors.",
+    "body": "In independent practices, the office manager orders supplies alongside front desk work. She walks the supply closet, updates a spreadsheet, and largely accepts the distributor rep's suggested reorder monthly. Gaps are filled from Amazon Business or a second distributor at retail prices, and invoices are matched by hand at month end. The deck puts this at about 5 hours a week, on spend of 6-8% of revenue. 17 of 22 interviewed practices use two or more distributors.",
     "refs": [
       "D2",
       "D3",
-      "S1.1",
       "S1.2"
     ]
   },
   "failure_modes": {
-    "body": "The failure is structural. The person who places the order has no time to check it, so the vendor effectively sets the order. This likely favors the distributor's catalog and margins over the practice's costs, though that is an inference. Usage knowledge lives in one person and one spreadsheet, so ordering stops when that person is away. Interviewed practices reported about three stockouts of a critical item per quarter, and these cost them rescheduled patients, not only money. Practices split purchases across distributors, but each portal shows only its own catalog and prices, so nobody sees the whole picture. Meanwhile, DSOs centralize purchasing and win better prices, which widens the cost gap for independents.",
+    "body": "The core failure is who writes the order. The distributor's rep suggests the reorder, and the office manager lacks time and data to challenge it. None of 22 interviewed practices forecast usage from the schedule, so stockouts appear only when the closet is empty: 3 critical-item stockouts per quarter; one owner rescheduled patients. No tool sees total spend across sources, and her absence halts ordering. The owner bears the cost but not the work, which likely explains why the rep's default persists.",
     "refs": [
       "D2",
       "D3",
-      "D5",
-      "D6",
       "S1.1",
       "S1.2"
     ]
   },
   "alternatives": [
     {
-      "name": "Spreadsheet plus the distributor rep's suggested order",
+      "name": "Spreadsheet and supply-closet walk",
       "kind": "status quo",
-      "how_used": "Office manager counts stock by hand; rep proposes monthly re-order that usually gets accepted unchecked.",
-      "where_it_breaks": "No usage forecast, depends on one person, and the vendor effectively decides the order.",
+      "how_used": "Office manager counts the closet and updates a spreadsheet alongside front desk duties.",
+      "where_it_breaks": "Depends on one person and one computer; no usage forecast, so critical items run out.",
       "refs": [
         "D3",
         "D6",
-        "S1.1",
         "S1.2"
       ]
     },
     {
-      "name": "Distributor ordering portals",
+      "name": "Distributor rep and ordering portal",
       "kind": "incumbent",
-      "how_used": "Free with the distributor account; practices order online from their main distributor.",
-      "where_it_breaks": "Locked to one distributor's catalog and prices, while most practices buy from several.",
+      "how_used": "Rep visits monthly and suggests the reorder; portal is free with the distributor account.",
+      "where_it_breaks": "Locked to one catalog; the seller writes the order and nobody has time to check it.",
       "refs": [
-        "D5",
+        "D3",
         "D6",
-        "S1.2"
+        "S1.1"
       ]
     },
     {
       "name": "Group purchasing organizations",
       "kind": "adjacent tool",
-      "how_used": "Members get negotiated discounts on supplies.",
-      "where_it_breaks": "Address price only; no ordering workflow, forecasting or stockout prevention.",
+      "how_used": "Negotiate member discounts with suppliers on behalf of practices.",
+      "where_it_breaks": "Addresses price only; the office manager still counts, orders and reconciles by hand.",
       "refs": [
         "D6"
       ]
@@ -58,63 +54,46 @@
     {
       "name": "Horizontal inventory apps",
       "kind": "adjacent tool",
-      "how_used": "Generic stock tracking tools some practices use to count inventory.",
-      "where_it_breaks": "No link to the procedure schedule, so they cannot forecast usage.",
+      "how_used": "Generic stock tracking for practices wanting something beyond a spreadsheet.",
+      "where_it_breaks": "No link to the procedure schedule, so they track stock without forecasting use.",
       "refs": [
         "D6"
       ]
     }
   ],
   "market_structure": {
-    "body": "Supply distribution is concentrated in two national distributors, and each controls its own free ordering portal and a rep relationship that shapes what gets ordered. The buyers are fragmented. The deck estimates about 70% of roughly 135,000 US practices are independent, and each has no purchasing staff. DSOs are absorbing practices and centralizing purchasing, which squeezes independents on price. Purchasing groups help on price but not on workflow. This suggests the incumbents have the distribution and little incentive to build a neutral tool that compares across distributors.",
+    "body": "Two national distributors control most supply distribution, each with its own ordering portal, so the free tool every practice has is built to keep orders in one catalog. Group purchasing organizations negotiate price without touching ordering. DSOs are consolidating practices and centralizing purchasing, squeezing independents on price. That gives independents a reason to buy Cairnly, though consolidation may shrink their pool (inference). Cairnly estimates about 135,000 US practices, roughly 70% independent; this company estimate is unverified.",
     "refs": [
       "D5",
       "D6"
     ]
   },
   "wedge": {
-    "body": "The proposed entry point is the independent practice that already buys from two or more distributors and has no forecast. That was 17 of 22 interviewees. Cairnly reads scheduled procedures from the practice management system to forecast usage, then routes each order to the best contracted price across distributors. No single distributor's portal offers that cross-distributor view. The pitch is fewer stockouts plus lower spend for a buyer that cannot match DSO purchasing scale. The founder's DSO operations background fits this. For the wedge to widen, several things must be true. Distributors must keep contracted pricing and ordering accessible to a third party rather than restrict it. Practice management integrations must work across the systems independents use. The 11% savings must hold beyond five internal pilots and clearly exceed the $249 monthly fee. The deck does not yet show any of these, and slide 8 was unreadable.",
+    "body": "Cairnly targets multi-distributor independents lacking purchasing teams. It forecasts usage from practice-management schedules and orders across distributors at contracted prices, unlike single-catalog portals, price-only GPOs or schedule-blind apps. The CEO ran operations for 8 years at a 30-location dental group. Evidence is thin: 14 pilots, 5 paying $249 per location monthly, and 11% savings over 90 days (internal data, five practices). Unverified: distributors continuing to permit third-party ordering, integration coverage, and savings beyond one quarter. Slide 8 was unreadable.",
     "refs": [
       "D4",
-      "D5",
+      "D6",
       "D7",
       "D9",
-      "S1.2",
-      "D8"
+      "S1.2"
     ]
   },
   "thesis_support": "partially supported",
-  "thesis_support_rationale": "Interviews credibly document the workflow, the rep-default dynamic and multi-distributor buying. Evidence of winning and retaining customers against incumbents is thin: five paying customers, internal n=5 savings data, and nothing on distributor response.",
+  "thesis_support_rationale": "Sources document the workflow and its failures well through 22 interviews, but proof that Cairnly wins and holds customers rests on 5 paying practices and an internal n=5 savings figure, with distributor access untested.",
   "evidence_gaps": [
-    "Independent verification of the 11% savings beyond five internal pilots",
-    "How distributors respond to third-party ordering and access to contracted pricing",
-    "Retention and conversion from 14 pilots to paying customers",
-    "Which practice management systems Cairnly integrates with, and their coverage"
+    "No evidence distributors permit third-party ordering or share contracted prices with Cairnly.",
+    "Savings figure is internal, 90 days, five practices; no baseline method or retention data.",
+    "No practice management system integration coverage shown; supported systems are unstated.",
+    "Slide 8 unreadable; no win/loss data against distributor portals or GPOs."
   ],
   "diligence_questions": [
-    "Have either national distributor restricted or supported your ordering access, and what happens if they cut it off?",
-    "Why have only 5 of 14 pilot practices converted to paid, and what did non-payers say?",
-    "How do you sell around the rep relationship that currently sets most practices' orders?"
+    "How do distributors respond when Cairnly places orders, and is contracted pricing access secured in writing?",
+    "Of 14 pilots, why have only 5 converted to paid, and what did the other 9 say?",
+    "Which practice management systems do you integrate with, and what share of independents do they cover?"
   ],
   "claims": [
     {
-      "statement": "Most interviewed practices default to the distributor rep's suggested order.",
-      "refs": [
-        "D3"
-      ],
-      "quote": "Most said the rep's suggested order is the default because nobody has time to check it.",
-      "basis": "stated in sources"
-    },
-    {
-      "statement": "Most interviewed practices buy from multiple distributors, and none forecast usage from the schedule.",
-      "refs": [
-        "S1.2"
-      ],
-      "quote": "17 of 22 practices buy from two or more distributors; none forecast",
-      "basis": "stated in sources"
-    },
-    {
-      "statement": "Office managers spend about five hours a week on ordering and reconciliation.",
+      "statement": "Office managers spend about 5 hours a week on ordering and invoice reconciliation.",
       "refs": [
         "D2"
       ],
@@ -122,7 +101,39 @@
       "basis": "stated in sources"
     },
     {
-      "statement": "Ordering depends on a single person and spreadsheet.",
+      "statement": "Interviewed practices reported 3 critical-item stockouts per quarter.",
+      "refs": [
+        "D2"
+      ],
+      "quote": "Practices we interviewed reported 3 stockouts of a critical item per quarter.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The rep's suggested order is the default because nobody checks it.",
+      "refs": [
+        "D3"
+      ],
+      "quote": "Most said the rep's suggested order is the default because nobody has time to check it.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "Office managers accept rep orders without comparing prices.",
+      "refs": [
+        "S1.1"
+      ],
+      "quote": "I order whatever the rep puts in front of me. I don't have time to compare prices.",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "Most interviewed practices buy from multiple distributors.",
+      "refs": [
+        "S1.2"
+      ],
+      "quote": "17 of 22 practices buy from two or more distributors",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The spreadsheet process depends on a single person.",
       "refs": [
         "S1.2"
       ],
@@ -138,7 +149,7 @@
       "basis": "stated in sources"
     },
     {
-      "statement": "DSO consolidation squeezes independent practices on supply prices.",
+      "statement": "DSO consolidation squeezes independent practices on price.",
       "refs": [
         "D5"
       ],
@@ -146,15 +157,7 @@
       "basis": "stated in sources"
     },
     {
-      "statement": "Reported savings come from a small internal sample.",
-      "refs": [
-        "D7"
-      ],
-      "quote": "Pilot practices cut supply spend 11% on average over 90 days (internal data, n=5)",
-      "basis": "stated in sources"
-    },
-    {
-      "statement": "Cairnly has five paying customers at $249 per location per month.",
+      "statement": "Cairnly has 5 paying customers at $249 per location per month.",
       "refs": [
         "D7"
       ],
@@ -162,22 +165,29 @@
       "basis": "stated in sources"
     },
     {
-      "statement": "Distributor reps likely have little incentive to optimize practice spend across competitors, which leaves room for a neutral ordering layer.",
+      "statement": "The 11% savings figure comes from internal data on five practices.",
       "refs": [
-        "D3",
+        "D7"
+      ],
+      "quote": "Pilot practices cut supply spend 11% on average over 90 days (internal data, n=5)",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "The CEO has dental group operations experience relevant to purchasing.",
+      "refs": [
+        "D9"
+      ],
+      "quote": "8 years running operations for a 30-location dental group",
+      "basis": "stated in sources"
+    },
+    {
+      "statement": "Distributors that run their own portals may resist a third party routing orders across catalogs, which would threaten the wedge.",
+      "refs": [
         "D5",
         "D6"
       ],
       "quote": "",
       "basis": "inference from sources"
-    },
-    {
-      "statement": "The CEO has direct dental group operations experience.",
-      "refs": [
-        "D9"
-      ],
-      "quote": "Maya Okafor, CEO - 8 years running operations for a 30-location dental group",
-      "basis": "stated in sources"
     }
   ]
 }

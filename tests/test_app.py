@@ -96,3 +96,30 @@ def test_each_generation_is_emailed_once(sample_dir, fake_generate, monkeypatch)
 
     next(b for b in at.button if b.label == "Regenerate analysis").click().run()
     assert len(sent) == 2
+
+
+def test_shorten_to_fit_button_fixes_overlong_draft(sample_dir, monkeypatch):
+    from test_tighten import EditorClient, _over_draft
+
+    from competition import template as T
+
+    def fake(bundle, company_name, report, client=None):
+        a = _over_draft()
+        return AnalysisResult(a, ground(a, bundle), "claude-opus-5-5", 1, 1)
+
+    monkeypatch.setattr(analyzer, "generate", fake)
+    monkeypatch.setattr(analyzer, "make_client", lambda key=None: EditorClient(words=50))
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+
+    at = AppTest.from_file(APP, default_timeout=60)
+    _seed(at, sample_dir / "Cairnly_Seed_Deck.pptx")
+    at.run()
+    next(b for b in at.button if b.label == "Generate analysis").click().run()
+    assert any("Over the template's length limits" in w.value for w in at.warning)
+
+    next(b for b in at.button if b.label == "Shorten to fit").click().run()
+    assert not at.exception
+    assert T.length_issues(at.session_state["draft"]) == []
+    assert at.text_area(key="2_status_quo_body").value == " ".join(["short"] * 50)
+    assert not any("Over the template's length limits" in w.value for w in at.warning)
+    assert any("now fits the template" in s.value for s in at.success)
