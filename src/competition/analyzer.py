@@ -20,7 +20,14 @@ FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
 # Editing to a word count is a simple task; it does not need generation-level effort.
 TIGHTEN_EFFORT = "medium"
-TIGHTEN_ATTEMPTS = 2
+TIGHTEN_ATTEMPTS = 3
+# Models overshoot word targets by a few words, so ask for less than the hard
+# limit: first at 85% of it, then at 70% for passages that still came back over.
+TIGHTEN_TARGETS = (0.85, 0.70, 0.70)
+
+
+def tighten_target(limit: int, attempt: int) -> int:
+    return max(1, int(limit * TIGHTEN_TARGETS[min(attempt, len(TIGHTEN_TARGETS) - 1)]))
 
 
 class AnalysisError(Exception):
@@ -104,11 +111,15 @@ def tighten(analysis: Analysis, client: anthropic.Anthropic | None = None) -> Ti
         return result
     client = client or make_client()
 
-    for _ in range(TIGHTEN_ATTEMPTS):
-        passages = [(f"p{i}", o, T.get_text(analysis, o.path)) for i, o in enumerate(overruns)]
+    shortened_paths: set = set()
+    last_attempt_words: dict = {}  # path -> word count of the model's previous rewrite
+
+    for attempt in range(TIGHTEN_ATTEMPTS):
+        passages = [(f"p{i}", o, T.get_text(analysis, o.path), tighten_target(o.limit, attempt),
+                     last_attempt_words.get(o.path)) for i, o in enumerate(overruns)]
         Rewrites = create_model("Rewrites", **{
-            pid: (str, Field(description=f"Rewrite of passage {pid} in at most {o.limit} words."))
-            for pid, o, _ in passages})
+            pid: (str, Field(description=f"Rewrite of passage {pid} in at most {target} words."))
+            for pid, _, _, target, _ in passages})
         try:
             message = _call(client, system=TIGHTEN_SYSTEM_PROMPT, user=build_tighten_message(passages),
                             output_format=Rewrites, effort=TIGHTEN_EFFORT)
@@ -118,11 +129,15 @@ def tighten(analysis: Analysis, client: anthropic.Anthropic | None = None) -> Ti
         result.input_tokens += message.usage.input_tokens
         result.output_tokens += message.usage.output_tokens
 
-        for pid, overrun, original in passages:
+        for pid, overrun, original, _, _ in passages:
             rewrite = " ".join(str(getattr(message.parsed_output, pid, "") or "").split())
-            if rewrite and T.word_count(rewrite) < T.word_count(original):
+            if not rewrite:
+                continue
+            last_attempt_words[overrun.path] = T.word_count(rewrite)
+            if T.word_count(rewrite) < T.word_count(original):
                 T.set_text(analysis, overrun.path, rewrite)
-                result.shortened += 1
+                shortened_paths.add(overrun.path)
+        result.shortened = len(shortened_paths)
         overruns = T.length_overruns(analysis)
         if not overruns:
             break

@@ -6,6 +6,7 @@ from xml.sax.saxutils import escape, quoteattr
 
 from .evidence import EvidenceReport
 from .ingest import SourceBundle
+from .template import word_count
 
 SYSTEM_PROMPT = """\
 You are a venture partner at a seed-stage fund writing the competition section of an investment memo for your partners. Your reader is another investor who has not seen the deck. They want to understand the market the way a customer lives it: how the problem is handled today, why that breaks, how the market is organized, and whether this company has found a real wedge. They do not need a product tour; mention the product only as far as it explains the wedge.
@@ -57,7 +58,7 @@ def build_user_message(bundle: SourceBundle, company_name: str, report: Evidence
 
 
 TIGHTEN_SYSTEM_PROMPT = """\
-You are the editor of a one-page seed-stage investment memo. Some passages run over their hard word limits and the page will not fit. Rewrite each passage you are given so it is at or under its limit; aim for about 90% of the limit so the count is safely inside it.
+You are the editor of a one-page seed-stage investment memo. Some passages run over their hard word limits and the page will not fit. Rewrite each passage you are given to at most its target word count, which is set below the hard limit so the result fits with room to spare.
 
 - Keep what matters to an investor: the specific facts and figures, named alternatives, who does what, and the passage's conclusion.
 - Keep wording that marks inference ("suggests", "likely", "by the company's estimate") and any statement that evidence is missing. Do not turn a hedged claim into a firm one.
@@ -67,11 +68,15 @@ You are the editor of a one-page seed-stage investment memo. Some passages run o
 """
 
 
-def build_tighten_message(passages: list[tuple[str, object, str]]) -> str:
-    """passages: (id, Overrun, current text)."""
-    parts = ["Rewrite each passage to fit its limit. Return every passage id."]
-    for pid, overrun, text in passages:
-        parts.append(f'<passage id="{pid}" section={quoteattr(overrun.label)} '
-                     f'limit_words="{overrun.limit}" current_words="{overrun.words}">\n'
+def build_tighten_message(passages: list[tuple]) -> str:
+    """passages: (id, Overrun, current text, target words, words in your previous rewrite or None)."""
+    parts = ["Rewrite each passage to at most its target_words. The target sits below the hard limit "
+             "on purpose, so a small overshoot still fits. Count the words before you answer. "
+             "Return every passage id."]
+    for pid, overrun, text, target, previous in passages:
+        retry = (f' previous_rewrite_words="{previous}" note="your last rewrite was still over the limit; '
+                 f'cut harder"' if previous else "")
+        parts.append(f'<passage id="{pid}" section={quoteattr(overrun.label)} target_words="{target}" '
+                     f'hard_limit_words="{overrun.limit}" current_words="{word_count(text)}"{retry}>\n'
                      f"{escape(text)}\n</passage>")
     return "\n\n".join(parts)
