@@ -85,3 +85,14 @@ Turn it on by adding `RESEND_API_KEY` to `.env`. `NOTIFY_EMAIL_TO` (comma-separa
 `NOTIFY_EMAIL_FROM` (must be on a domain verified in Resend) and
 `EMAIL_NOTIFICATIONS=false` are optional. A failed send is shown as a warning
 and never affects the analysis; tests can never send real email.
+
+## Deploying on Railway
+
+`railway.json` sets the start command (`streamlit run` on `$PORT`, `0.0.0.0`) and
+the `/_stcore/health` health check, so Railpack does not fall back to guessing
+`python app.py`. If it ever does, `app.py` re-launches itself under Streamlit
+and binds to `$PORT`.
+
+`.env` is not committed, so set `ANTHROPIC_API_KEY` (and `RESEND_API_KEY` for
+result emails) in the Railway service's Variables. LibreOffice is not in the
+image, so legacy `.ppt` uploads get the "save as PPTX or PDF" instruction.

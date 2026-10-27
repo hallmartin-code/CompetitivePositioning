@@ -26,13 +26,10 @@ def _kill_tree(proc: subprocess.Popen) -> None:
     proc.wait(timeout=20)
 
 
-def test_plain_python_launch_serves_the_app(tmp_path):
-    port = _free_port()
+def _launch_and_check(args: list[str], port: int, cwd: Path, env: dict | None = None) -> None:
     kwargs = ({"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt"
               else {"start_new_session": True})
-    # Launched from an unrelated cwd, as a terminal or IDE might.
-    proc = subprocess.Popen([sys.executable, str(ROOT / "app.py"), "--server.headless", "true",
-                             "--server.port", str(port)], cwd=tmp_path,
+    proc = subprocess.Popen([sys.executable, str(ROOT / "app.py"), *args], cwd=cwd, env=env,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kwargs)
     try:
         deadline, health = time.time() + 60, None
@@ -48,3 +45,16 @@ def test_plain_python_launch_serves_the_app(tmp_path):
         assert favicon.status == 200
     finally:
         _kill_tree(proc)
+
+
+def test_plain_python_launch_serves_the_app(tmp_path):
+    # Launched from an unrelated cwd, as a terminal or IDE might.
+    port = _free_port()
+    _launch_and_check(["--server.headless", "true", "--server.port", str(port)], port, tmp_path)
+
+
+def test_railway_style_launch_binds_to_port_env(tmp_path):
+    """Railpack's default deploy is a bare `python app.py` with only $PORT set."""
+    port = _free_port()
+    env = {**os.environ, "PORT": str(port)}
+    _launch_and_check([], port, tmp_path, env)

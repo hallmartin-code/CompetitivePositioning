@@ -31,9 +31,19 @@ def _relaunch_under_streamlit() -> None:
     """
     venv = ROOT / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     python = str(venv) if venv.exists() else sys.executable
-    cmd = [python, "-m", "streamlit", "run", str(ROOT / "app.py"), *sys.argv[1:]]
+    args = sys.argv[1:]
+    # Hosts such as Railway route traffic to $PORT on all interfaces; Streamlit's
+    # default of localhost:8501 would leave the container unreachable.
+    port = os.environ.get("PORT")
+    if port and not any(a.startswith("--server.port") for a in args):
+        args = ["--server.port", port, "--server.address", "0.0.0.0", "--server.headless", "true", *args]
+    cmd = [python, "-m", "streamlit", "run", str(ROOT / "app.py"), *args]
+    os.chdir(ROOT)
+    if os.name != "nt":
+        # Replace this process so the platform's SIGTERM reaches Streamlit directly.
+        os.execv(python, cmd)
     try:
-        sys.exit(subprocess.call(cmd, cwd=ROOT))
+        sys.exit(subprocess.call(cmd))
     except KeyboardInterrupt:
         sys.exit(0)
 
