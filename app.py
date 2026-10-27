@@ -1,6 +1,6 @@
 """Streamlit UI: pitch deck in, one-page competition analysis PDF out.
 
-    streamlit run app.py
+    streamlit run app.py        (or simply: python app.py)
 
 Everything the user uploads, generates and edits lives in st.session_state, so
 revising the memo never requires re-uploading files or re-running the model.
@@ -11,13 +11,40 @@ from __future__ import annotations
 import hashlib
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
+
+def _relaunch_under_streamlit() -> None:
+    """Hand a plain ``python app.py`` (e.g. VS Code's Run button) to ``streamlit run``.
+
+    Outside ``streamlit run`` the script executes once in "bare mode": session
+    state does not persist and st.stop() is a no-op, so the app falls through
+    and crashes. Streamlit is always imported before ``streamlit run`` executes
+    the script, so its absence identifies a plain launch using only the stdlib,
+    before any third-party import can fail on an interpreter that lacks them.
+    The project venv is preferred, and the cwd is the project root so
+    .streamlit/config.toml (theme, static favicon) is found.
+    """
+    venv = ROOT / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    python = str(venv) if venv.exists() else sys.executable
+    cmd = [python, "-m", "streamlit", "run", str(ROOT / "app.py"), *sys.argv[1:]]
+    try:
+        sys.exit(subprocess.call(cmd, cwd=ROOT))
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+
+if __name__ == "__main__" and "streamlit" not in sys.modules:
+    _relaunch_under_streamlit()
 
 import pandas as pd
 import streamlit as st
 
-sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+sys.path.insert(0, str(ROOT / "src"))
 
 from competition import config  # noqa: E402
 from competition.analyzer import AnalysisError, generate, make_client  # noqa: E402
